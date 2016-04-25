@@ -9,7 +9,7 @@ module.exports = (robot) ->
     url = "https://api.uber.com/v1/products"
 
     parameters =
-      server_token: "CwEUXi7RittlCfJk38_CdjJrQ0Yeigk2B0oUPjdc"
+      server_token: "SERVER_TOKEN_HERE"
       latitude: 37.775818
       longitude: -122.418028
 
