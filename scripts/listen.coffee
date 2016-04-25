@@ -17,17 +17,19 @@ module.exports = (robot) ->
       .header('Accept', 'application/json')
       .get() (err, res, body) ->
 
-        # err & response status checking code
-        if response.getHeader('Content-Type') isnt 'application/json'
-          res.send "Didn't get back JSON :("
-          return
+        res.send "Got back #{body}"
 
-        data = null
-        try
-          data = JSON.parse body
-        catch error
-          res.send "Ran into an error parsing JSON"
-          return
+        # # err & response status checking code
+        # if response.getHeader('Content-Type') isnt 'application/json'
+        #   res.send "Didn't get back JSON :("
+        #   return
 
-        for product, i in data.products
-          res.send "I found #{product.display_name}"
+        # data = null
+        # try
+        #   data = JSON.parse body
+        # catch error
+        #   res.send "Ran into an error parsing JSON"
+        #   return
+
+        # for product, i in data.products
+        #   res.send "I found #{product.display_name}"
