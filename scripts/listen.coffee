@@ -1,9 +1,7 @@
-Uber = require('uber-api')
-    server_token: ""
-
-
 module.exports = (robot) ->
 
+  robot.respond /googlemaps/i, (res) ->
+    res.reply "#{GOOGLE_MAPS_TOKEN}"
 
   robot.hear /uber/i, (res) ->
     res.send "Looking for an Uber? To get the latest estimates, reply to me with \"current wait\"."
