@@ -1,3 +1,7 @@
+Uber = require('uber-api')
+    server_token: "CwEUXi7RittlCfJk38_CdjJrQ0Yeigh2B0oUPjdc"
+
+
 module.exports = (robot) ->
 
 
@@ -9,27 +13,5 @@ module.exports = (robot) ->
     url = "https://api.uber.com/v1/products"
 
     parameters =
-      server_token: "SERVER_TOKEN_HERE"
       latitude: 37.775818
       longitude: -122.418028
-
-    robot.http(url, parameters)
-      .header('Accept', 'application/json')
-      .get() (err, res, body) ->
-
-        res.send "Got back #{body}"
-
-        # # err & response status checking code
-        # if response.getHeader('Content-Type') isnt 'application/json'
-        #   res.send "Didn't get back JSON :("
-        #   return
-
-        # data = null
-        # try
-        #   data = JSON.parse body
-        # catch error
-        #   res.send "Ran into an error parsing JSON"
-        #   return
-
-        # for product, i in data.products
-        #   res.send "I found #{product.display_name}"
