@@ -1,5 +1,5 @@
 Uber = require('uber-api')
-    server_token: "CwEUXi7RittlCfJk38_CdjJrQ0Yeigh2B0oUPjdc"
+    server_token: ""
 
 
 module.exports = (robot) ->
@@ -10,8 +10,3 @@ module.exports = (robot) ->
 
   robot.respond /current wait/i, (res) ->
 
-    url = "https://api.uber.com/v1/products"
-
-    parameters =
-      latitude: 37.775818
-      longitude: -122.418028
