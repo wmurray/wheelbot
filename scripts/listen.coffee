@@ -10,6 +10,3 @@ module.exports = (robot) ->
 
   robot.respond /current wait/i, (res) ->
     res.reply "Soon."
-
-  wheelbot.respond /current wait/i, (res) ->
-
