@@ -9,4 +9,7 @@ module.exports = (robot) ->
     res.send "Looking for an Uber? To get the latest estimates, reply to me with \"current wait\"."
 
   robot.respond /current wait/i, (res) ->
+    res.reply "Soon."
+
+  wheelbot.respond /current wait/i, (res) ->
 
