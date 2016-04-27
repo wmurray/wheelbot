@@ -11,14 +11,19 @@ module.exports = (robot) ->
 
     endPoints =
       startLat: 0
-      startLon: 0
+      startLng: 0
       endLat: 0
-      endLon: 0
+      endLng: 0
 
     msg.http(url).get()((err, res, body) ->
       try
         data = JSON.parse(body)
-        msg.send "#{body}"
+        endPoints.startLat = data.routes[0].legs[0].start_location.lat
+        endPoints.startLng = data.routes[0].legs[0].start_location.lng
+        endPoints.endLat = data.routes[0].legs[0].end_location.lat
+        endPoints.endLng = data.routes[0].legs[0].end_location.lng
+
+        msg.send "For #{endPoints.startLat} #{endPoints.startLng} to #{endPoints.endLat} #{endPoints.endLng}"
       catch error
         errMsg = res.statusCode
         msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
