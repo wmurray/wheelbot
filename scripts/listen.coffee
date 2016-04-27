@@ -1,10 +1,10 @@
 module.exports = (robot) ->
 
-  robot.respond /I need directions from (.*) to (.*)/i, (msg) ->
+  robot.respond /directions from (.*) to (.*)/i, (msg) ->
     origin = msg.match[1]
     destination = msg.match[2]
-    originFormatted = splitAddress(origin)
-    destinationFormatted = splitAddress(destination)
+    originFormatted = formatAddress(origin)
+    destinationFormatted = formatAddress(destination)
     key = process.env.GOOGLE_MAPS_TOKEN
     query = "?origin=" + originFormatted + "?destination=" + destinationFormatted + "?key=" + key
     url = "https://maps.googleapis.com/maps/api/directions/json" + query
@@ -31,5 +31,5 @@ module.exports = (robot) ->
   robot.respond /uber/i, (res) ->
     res.reply "Soon."
 
-splitAddress = (add) ->
+formatAddress = (add) ->
   add.split(" ").join("+");
