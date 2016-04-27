@@ -19,7 +19,7 @@ module.exports = (robot) ->
       try
         data = JSON.parse(body)
         endPoints.startLat = data.routes[0].legs.start_location.lat
-        endPoints.startLon = data.routes[0].legs._startlocation.lon
+        endPoints.startLon = data.routes[0].legs.start_location.lon
         endPoints.endLat = data.routes[0].legs.end_location.lat
         endPoints.endLon = data.routes[0].legs.end_location.lon
         msg.send "For #{endPoints.startLat} #{endPoints.startLon} to #{endPoints.endLat} #{endPoints.endLon}"
