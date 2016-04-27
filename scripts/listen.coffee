@@ -26,7 +26,7 @@ module.exports = (robot) ->
         msg.send "Check the address and try again."
       )
 
-    checkUber(msg, uUrl, uKey)
+    checkUber(msg, uUrl, uKey, tripDetail)
 
   robot.respond /uber/i, (res) ->
     res.reply "Soon."
@@ -34,7 +34,7 @@ module.exports = (robot) ->
 formatAddress = (add) ->
   add.split(" ").join("+");
 
-checkUber =  (msg, uUrl, uKey) ->
+checkUber =  (msg, uUrl, uKey, tripDetail) ->
   url = uUrl
   headers =
     Authorization: "Token " + uKey
