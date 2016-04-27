@@ -6,7 +6,7 @@ module.exports = (robot) ->
     originFormatted = formatAddress(origin)
     destinationFormatted = formatAddress(destination)
     key = process.env.GOOGLE_MAPS_TOKEN
-    query = "?origin=" + originFormatted + "&destination=" + destinationFormatted + "?key=" + key
+    query = "?origin=" + originFormatted + "&destination=" + destinationFormatted + "&key=" + key
     url = "https://maps.googleapis.com/maps/api/directions/json" + query
 
     endPoints =
@@ -18,7 +18,7 @@ module.exports = (robot) ->
     msg.http(url).get()((err, res, body) ->
       try
         data = JSON.parse(body)
-        msg.send "it worked"
+        msg.send "#{body}"
       catch error
         errMsg = res.statusCode
         msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
