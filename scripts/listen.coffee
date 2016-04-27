@@ -7,7 +7,7 @@ module.exports = (robot) ->
     url = "https://maps.googleapis.com/maps/api/geocode/json" + query
 
 
-    msg.http(queryUrl).get()((err, res, body) ->
+    msg.http(url).get()((err, res, body) ->
       try
         data = JSON.parse(body)
         lat = data.geometry.location.lat
