@@ -6,13 +6,12 @@ module.exports = (robot) ->
     query = "?address=" + origin + "?key=" + key
     url = "https://maps.googleapis.com/maps/api/geocode/json" + query
 
+    msg.send "#{url}"
 
     msg.http(url).get()((err, res, body) ->
       try
         data = JSON.parse(body)
-        lat = data.geometry.location.lat
-        lon = data.geometry.location.lon
-        msg.send "Latitude: #{lat}, Longitude: #{lon}"
+        msg.send "#{data}"
       catch error
         errMsg = res.statusCode
         msg.send "Error. Did you try to find the lat/lon of Neverland?"
