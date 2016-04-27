@@ -16,8 +16,8 @@ module.exports = (robot) ->
       catch error
         errMsg = res.statusCode
         msg.send "Error. Did you try to find the lat/lon of Neverland?"
-        msg.send("#{errMsg}")
-    )
+        msg.send "#{errMsg}"
+      )
 
   robot.hear /uber/i, (res) ->
     res.send "Looking for an Uber? To get the latest estimates, reply to me with \"current wait\"."
