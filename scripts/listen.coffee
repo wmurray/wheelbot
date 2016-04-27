@@ -1,6 +1,6 @@
 module.exports = (robot) ->
 
-  robot.respond /directions from (.*) to (.*)/i, (msg) ->
+  robot.respond /get me from (.*) to (.*)/i, (msg) ->
     origin = msg.match[1]
     destination = msg.match[2]
     originFormatted = formatAddress(origin)
