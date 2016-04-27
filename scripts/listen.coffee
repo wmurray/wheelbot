@@ -1,7 +1,24 @@
 module.exports = (robot) ->
 
-  robot.respond /googlemaps/i, (res) ->
-    res.reply "#{process.env.GOOGLE_MAPS_TOKEN}"
+  robot.respond /here (.*)/i, (msg) ->
+    origin = msg.match[1]
+    key = process.env.GOOGLE_MAPS_TOKEN
+    url = "https://maps.googleapis.com/maps/api/geocode/json"
+    query =
+      origin: origin
+      key: key
+
+    msg.http(url).query(query).get()((err, res, body) ->
+      try
+        data = JSON.parse(body)
+        lat = data.geometry.location.lat
+        lon = data.geometry.location.lon
+        msg.send "Latitude: #{lat}, Longitude: #{lon}"
+      catch error
+        msg.send "Error. Did you try to find hte lat/lon of Neverland?"
+    )
+
+    res.reply "Here is the lat/lon for #{address} is:"
 
   robot.hear /uber/i, (res) ->
     res.send "Looking for an Uber? To get the latest estimates, reply to me with \"current wait\"."
