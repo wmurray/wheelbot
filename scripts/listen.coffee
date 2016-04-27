@@ -8,15 +8,16 @@ module.exports = (robot) ->
       origin: origin
       key: key
 
-    msg.http(url + "?address=" + query).get()(err, res, body) ->
-      try
-        data = JSON.parse(body)
-        lat = data.geometry.location.lat
-        lon = data.geometry.location.lon
-        msg.send "Latitude: #{lat}, Longitude: #{lon}"
-      catch error
-        msg.send "Error. Did you try to find the lat/lon of Neverland?"
-        msg.send "#{origin}"
+    msg.http(url + "?address=" + query)
+      .get()(err, res, body) ->
+        try
+          data = JSON.parse(body)
+          lat = data.geometry.location.lat
+          lon = data.geometry.location.lon
+          msg.send "Latitude: #{lat}, Longitude: #{lon}"
+        catch error
+          msg.send "Error. Did you try to find the lat/lon of Neverland?"
+          msg.send "#{origin}"
 
   robot.hear /uber/i, (res) ->
     res.send "Looking for an Uber? To get the latest estimates, reply to me with \"current wait\"."
