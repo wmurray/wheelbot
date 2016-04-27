@@ -6,7 +6,7 @@ module.exports = (robot) ->
     url = "https://maps.googleapis.com/maps/api/geocode/json"
     query = "?address=" + origin + "?key=" + key
 
-    msg.send "#{origin}"
+    msg.send "#{url} + #{query}"
 
     msg.http(url + query).get()((err, res, body) ->
       try
