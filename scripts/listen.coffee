@@ -1,12 +1,14 @@
 module.exports = (robot) ->
 
   robot.respond /here (.*)/i, (msg) ->
-    origin = msg.match[1]
+    origin = splitAddress(msg.match[1])
     key = process.env.GOOGLE_MAPS_TOKEN
     url = "https://maps.googleapis.com/maps/api/geocode/json"
     query =
       origin: origin
       key: key
+
+    msg.send "#{origin}"
 
     msg.http(url).query(query).get()((err, res, body) ->
       try
@@ -23,3 +25,6 @@ module.exports = (robot) ->
 
   robot.respond /current wait/i, (res) ->
     res.reply "Soon."
+
+splitAddress = (add) ->
+  add.split(" ").join("+");
