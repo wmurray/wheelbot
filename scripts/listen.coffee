@@ -19,9 +19,9 @@ module.exports = (robot) ->
       try
         data = JSON.parse(body)
         endPoints.startLat = data.routes[0].legs[0].start_location.lat
-        endPoints.startLon = data.routes[0].legs[0].start_location.lon
+        endPoints.startLon = data.routes[0].legs[0].start_location.lng
         endPoints.endLat = data.routes[0].legs[0].end_location.lat
-        endPoints.endLon = data.routes[0].legs[0].end_location.lon
+        endPoints.endLon = data.routes[0].legs[0].end_location.lng
         msg.send "For #{endPoints.startLat} #{endPoints.startLon} to #{endPoints.endLat} #{endPoints.endLon}"
       catch error
         errMsg = res.statusCode
