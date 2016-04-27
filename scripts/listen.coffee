@@ -6,7 +6,7 @@ module.exports = (robot) ->
     originFormatted = formatAddress(origin)
     destinationFormatted = formatAddress(destination)
     key = process.env.GOOGLE_MAPS_TOKEN
-    query = "?origin=" + originFormatted + "?destination=" + destinationFormatted + "?key=" + key
+    query = "?origin=" + originFormatted + "&destination=" + destinationFormatted + "?key=" + key
     url = "https://maps.googleapis.com/maps/api/directions/json" + query
 
     endPoints =
