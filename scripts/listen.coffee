@@ -5,8 +5,8 @@ module.exports = (robot) ->
     key = process.env.GOOGLE_MAPS_TOKEN
     url = "https://maps.googleapis.com/maps/api/geocode/json"
     query =
-      origin: origin
-      key: key
+      origin: "?address=" + origin
+      key: "?key=" + key
 
     msg.send "#{origin}"
 
