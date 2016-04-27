@@ -22,7 +22,7 @@ module.exports = (robot) ->
         endPoints.startLon = data.routes[0].legs._startlocation.lon
         endPoints.endLat = data.routes[0].legs.end_location.lat
         endPoints.endLon = data.routes[0].legs.end_location.lon
-        msg.send "For #{endPoints.startLat} #{startLon} to #{endLat} #{endLon}"
+        msg.send "For #{endPoints.startLat} #{endPoints.startLon} to #{endPoints.endLat} #{endPoints.endLon}"
       catch error
         errMsg = res.statusCode
         msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
