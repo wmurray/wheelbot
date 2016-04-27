@@ -3,12 +3,11 @@ module.exports = (robot) ->
   robot.respond /here (.*)/i, (msg) ->
     origin = splitAddress(msg.match[1])
     key = process.env.GOOGLE_MAPS_TOKEN
-    url = "https://maps.googleapis.com/maps/api/geocode/json"
     query = "?address=" + origin + "?key=" + key
+    url = "https://maps.googleapis.com/maps/api/geocode/json" + query
 
-    msg.send "#{url} + #{query}"
 
-    msg.http(url + query).get()((err, res, body) ->
+    msg.http(queryUrl).get()((err, res, body) ->
       try
         data = JSON.parse(body)
         lat = data.geometry.location.lat
