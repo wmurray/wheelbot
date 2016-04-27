@@ -37,7 +37,7 @@ formatAddress = (add) ->
 checkUber =  (msg) ->
   url = uUrl
   headers =
-    Authorization: "Token" uKey
+    Authorization: "Token " + uKey
   params = tripDetail
   $.get(url, headers, params, (response)->
     msg.send "#{response}"
