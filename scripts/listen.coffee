@@ -4,9 +4,7 @@ module.exports = (robot) ->
     origin = splitAddress(msg.match[1])
     key = process.env.GOOGLE_MAPS_TOKEN
     url = "https://maps.googleapis.com/maps/api/geocode/json"
-    query =
-      origin: "?address=" + origin
-      key: "?key=" + key
+    query = "address=" + origini + "?key=" + key
 
     msg.send "#{origin}"
 
