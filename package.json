@@ -19,7 +19,6 @@
     "hubot": "~2.18.0",
     "hubot-slack": "~3.4.2",
     "uber-api": "~0.3.3",
-    "google-maps": "~3.2.1"
   },
   "engines": {
     "node": "6.0.x"
