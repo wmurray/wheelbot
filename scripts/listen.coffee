@@ -17,7 +17,9 @@ module.exports = (robot) ->
         lon = data.geometry.location.lon
         msg.send "Latitude: #{lat}, Longitude: #{lon}"
       catch error
+        errMsg = res.statusCode
         msg.send "Error. Did you try to find the lat/lon of Neverland?"
+        msg.send("#{errMsg}")
     )
 
   robot.hear /uber/i, (res) ->
