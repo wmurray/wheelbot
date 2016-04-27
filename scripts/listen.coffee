@@ -26,7 +26,7 @@ module.exports = (robot) ->
         msg.send "Check the address and try again."
       )
 
-    checkUber(msg uUrl uKey)
+    checkUber(msg, uUrl, uKey)
 
   robot.respond /uber/i, (res) ->
     res.reply "Soon."
