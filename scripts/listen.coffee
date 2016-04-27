@@ -18,7 +18,7 @@ module.exports = (robot) ->
     msg.http(url).get()((err, res, body) ->
       try
         data = JSON.parse(body)
-        msg.send "#{body}"
+        msg.send "it worked"
       catch error
         errMsg = res.statusCode
         msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
