@@ -1,30 +1,34 @@
 module.exports = (robot) ->
 
-  robot.respond /here (.*) to there (.*)/i, (msg) ->
+  robot.respond /I need directions from (.*) to (.*)/i, (msg) ->
     origin = msg.match[1]
     destination = msg.match[2]
     originFormatted = splitAddress(origin)
     destinationFormatted = splitAddress(destination)
     key = process.env.GOOGLE_MAPS_TOKEN
-    query = "?address=" + origin + "?key=" + key
-    url = "https://maps.googleapis.com/maps/api/geocode/json" + query
+    query = "?origin=" + originFormatted + "?destination=" + destinationFormatted + "?key=" + key
+    url = "https://maps.googleapis.com/maps/api/directions/json" + query
+
+    endPoints =
+      startLat: 0
+      startLon: 0
+      endLat: 0
+      endLon: 0
 
     msg.http(url).get()((err, res, body) ->
       try
         data = JSON.parse(body)
-        lat = data.results[0].geometry.location.lat
-        lon = data.results[0].geometry.location.lon
-        msg.send "For #{lat} #{lon}"
+        endPoints.startLat = data.routes[0].legs.start_location.lat
+        endPoints.startLon = data.routes[0].legs._startlocation.lon
+        endPoints.endLat = data.routes[0].legs.end_location.lat
+        endPoints.endLon = data.routes[0].legs.end_location.lon
+        msg.send "For #{endPoints.startLat} #{startLon} to #{endLat} #{endLon}"
       catch error
         errMsg = res.statusCode
-        msg.send "Error. Did you try to find the lat/lon of Neverland?"
-        msg.send "#{errMsg}"
+        msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
       )
 
-  robot.hear /uber/i, (res) ->
-    res.send "Looking for an Uber? To get the latest estimates, reply to me with \"current wait\"."
-
-  robot.respond /current wait/i, (res) ->
+  robot.respond /uber/i, (res) ->
     res.reply "Soon."
 
 splitAddress = (add) ->
