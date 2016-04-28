@@ -1,5 +1,3 @@
-Uber = require('uber-api')({server_token:process.env.UBER_SERVER_TOKEN,version:'v1'})
-
 module.exports = (robot) ->
 
   robot.respond /get me from (.*) to (.*)/i, (msg) ->
@@ -14,7 +12,7 @@ module.exports = (robot) ->
 
     tripDetail = {}
 
-    msg.http(gUrl).get()((err, res, body) ->
+    msg.http(gUrl).get().then((err, res, body) ->
       try
         data = JSON.parse(body)
         tripDetail.sLat = data.routes[0].legs[0].start_location.lat
@@ -22,12 +20,7 @@ module.exports = (robot) ->
         tripDetail.eLat = data.routes[0].legs[0].end_location.lat
         tripDetail.eLng = data.routes[0].legs[0].end_location.lng
 
-        Uber.getPriceEstimate(tripDetail, (error, response, msg) ->
-          if error
-            msg.send "#{error}"
-          else
-            msg.send "#{response}"
-        )
+        msg.send "#{tripDetail.sLat} and #{tripDetail.sLng} to #{tripDetail.eLat} and #{tripDetail.eLng}"
 
       catch error
         errMsg = res.statusCode
