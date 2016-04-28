@@ -39,6 +39,10 @@ checkUber =  (msg, uUrl, uKey, tripDetail) ->
   headers =
     Authorization: "Token " + uKey
   params = tripDetail
-  msg.http(uUrl).get(url, headers, params, (response)->
-    msg.send "#{response}"
-  , "json")
+  req = new XMLHttpRequest()
+  req.addEventListener("load", uberMsg)
+  req.open("GET", url, headers, params)
+  req.send
+
+  uberMsg = (msg) ->
+    msg.send "Got it. #{this.responseText}"
