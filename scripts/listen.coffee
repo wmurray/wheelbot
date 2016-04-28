@@ -21,18 +21,19 @@ module.exports = (robot) ->
         tripDetail.sLng = data.routes[0].legs[0].start_location.lng
         tripDetail.eLat = data.routes[0].legs[0].end_location.lat
         tripDetail.eLng = data.routes[0].legs[0].end_location.lng
+
+        Uber.getPriceEstimate(tripDetail, (error, response, msg) ->
+          if error
+            msg.send "#{error}"
+          else
+            msg.send "#{response}"
+        )
+
       catch error
         errMsg = res.statusCode
         msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
         msg.send "Check the address and try again."
       )
-
-    Uber.getPriceEstimate(tripDetail, (error, response, msg) ->
-      if error
-        msg.send "#{error}"
-      else
-        msg.send "#{response}"
-    )
 
 formatAddress = (add) ->
   add.split(" ").join("+");
