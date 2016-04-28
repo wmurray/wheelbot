@@ -12,12 +12,7 @@ module.exports = (robot) ->
     gUrl = "https://maps.googleapis.com/maps/api/directions/json" + gQuery
     uUrl = 'https://api.uber.com/v1/estimates/price'
 
-    tripDetail =
-      callback: (err, res, msg) ->
-        if err
-          msg.send "#{err}"
-        else
-          msg.send "#{res}"
+    tripDetail = {}
 
     msg.http(gUrl).get()((err, res, body) ->
       try
@@ -32,7 +27,12 @@ module.exports = (robot) ->
         msg.send "Check the address and try again."
       )
 
-    Uber.getPriceEstimate(tripDetail.sLat, tripDetail.sLon, tripDetail.eLat, tripDetail.eLon, tripDetail.callback(error, response, msg))
+    Uber.getPriceEstimate(tripDetail.sLat, tripDetail.sLon, tripDetail.eLat, tripDetail.eLon, (error, response, msg) ->
+      if error
+        msg.send "#{error}"
+      else
+        msg.send "#{response}"
+    )
 
 formatAddress = (add) ->
   add.split(" ").join("+");
