@@ -39,6 +39,6 @@ checkUber =  (msg, uUrl, uKey, tripDetail) ->
   headers =
     Authorization: "Token " + uKey
   params = tripDetail
-  $.get(url, headers, params, (response)->
+  msg.http(uUrl).get(url, headers, params, (response)->
     msg.send "#{response}"
   , "json")
