@@ -27,7 +27,7 @@ module.exports = (robot) ->
         msg.send "Check the address and try again."
       )
 
-    Uber.getPriceEstimate(tripDetail.sLat, tripDetail.sLon, tripDetail.eLat, tripDetail.eLon, (error, response, msg) ->
+    Uber.getPriceEstimate(tripDetail, (error, response, msg) ->
       if error
         msg.send "#{error}"
       else
