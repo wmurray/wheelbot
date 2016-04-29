@@ -20,19 +20,18 @@ module.exports = (robot) ->
 
     rp(googOpts)
       .then((gData) ->
-        tripDetail = {}
-
         uOpts =
           uri: "https://api.uber.com/v1/estimates/price"
-          headers:
-            "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-          data:
-            start_latitude: gData.routes[0].legs[0].start_location.lat
-            start_longitude: gData.routes[0].legs[0].start_location.lng
-            end_latitude: gData.routes[0].legs[0].end_location.lat
-            end_longitude: gData.routes[0].legs[0].end_location.lng
+          options:
+            headers:
+              "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+            data:
+              start_latitude: gData.routes[0].legs[0].start_location.lat
+              start_longitude: gData.routes[0].legs[0].start_location.lng
+              end_latitude: gData.routes[0].legs[0].end_location.lat
+              end_longitude: gData.routes[0].legs[0].end_location.lng
 
-        msg.send "#{uOpts.headers.Authorization}"
+        msg.send "#{uOpts.options.data.start_latitude}"
 
         rp(uOpts)
           .then((uData) ->
@@ -40,6 +39,7 @@ module.exports = (robot) ->
         )
         .catch((uErr) ->
           errMsg = uErr.statusCode
+          errCode = uErr.statusCode
           msg.send "Error, code: #{errMsg}. Uber API doesn't like your shenanigans."
         )
       )
