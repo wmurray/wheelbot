@@ -22,18 +22,17 @@ module.exports = (robot) ->
       .then((gData) ->
         tripDetail = {}
 
-        tripDetail.start_latitude = gData.routes[0].legs[0].start_location.lat
-        tripDetail.start_longitude = gData.routes[0].legs[0].start_location.lng
-        tripDetail.end_latitude = gData.routes[0].legs[0].end_location.lat
-        tripDetail.end_longitude = gData.routes[0].legs[0].end_location.lng
-
         uOpts =
           uri: "https://api.uber.com/v1/estimates/price"
           headers:
             "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-          data: tripDetail
+          data:
+            start_latitude: gData.routes[0].legs[0].start_location.lat
+            start_longitude: gData.routes[0].legs[0].start_location.lng
+            end_latitude: gData.routes[0].legs[0].end_location.lat
+            end_longitude: gData.routes[0].legs[0].end_location.lng
 
-        msg.send "#{tripDetail.sLat} and #{tripDetail.sLng} to #{tripDetail.eLat} and #{tripDetail.eLng}"
+        msg.send "#{uOpts.headers.Authorization}"
 
         rp(uOpts)
           .then((uData) ->
