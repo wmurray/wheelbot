@@ -22,10 +22,10 @@ module.exports = (robot) ->
       .then((gData) ->
         tripDetail = {}
 
-        tripDetail.sLat = gData.routes[0].legs[0].start_location.lat
-        tripDetail.sLng = gData.routes[0].legs[0].start_location.lng
-        tripDetail.eLat = gData.routes[0].legs[0].end_location.lat
-        tripDetail.eLng = gData.routes[0].legs[0].end_location.lng
+        tripDetail.start_latitude = gData.routes[0].legs[0].start_location.lat
+        tripDetail.start_longitude = gData.routes[0].legs[0].start_location.lng
+        tripDetail.end_latitude = gData.routes[0].legs[0].end_location.lat
+        tripDetail.end_longitude = gData.routes[0].legs[0].end_location.lng
 
         uOpts =
           uri: "https://api.uber.com/v1/estimates/price"
