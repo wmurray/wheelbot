@@ -40,6 +40,10 @@ module.exports = (robot) ->
           .then((uData) ->
             msg.send "#{uData}"
         )
+        .catch((uErr) ->
+          errMsg = uErr.statusCode
+          msg.send "Error, code: #{errMsg}. Uber API doesn't like your shenanigans."
+        )
       )
       .catch((err) ->
         errMsg = err.statusCode
