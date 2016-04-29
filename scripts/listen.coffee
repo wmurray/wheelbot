@@ -30,9 +30,8 @@ module.exports = (robot) ->
         uOpts =
           uri: "https://api.uber.com/v1/estimates/price"
           headers:
-            "Authorization": "Token " + process.env.UBER_TOKEN
+            "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
           data: tripDetail
-          json: true
 
         msg.send "#{tripDetail.sLat} and #{tripDetail.sLng} to #{tripDetail.eLat} and #{tripDetail.eLng}"
 
