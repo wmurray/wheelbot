@@ -7,10 +7,10 @@ module.exports = (robot) ->
     destination = msg.match[2]
     originFormatted = formatAddress(origin)
     destinationFormatted = formatAddress(destination)
+
     gKey = process.env.GOOGLE_MAPS_TOKEN
     gQuery = "?origin=" + originFormatted + "&destination=" + destinationFormatted + "&key=" + gKey
     gUrl = "https://maps.googleapis.com/maps/api/directions/json" + gQuery
-    uUrl = 'https://api.uber.com/v1/estimates/price'
 
     googOpts =
       uri: gUrl
@@ -19,14 +19,27 @@ module.exports = (robot) ->
       json: true
 
     rp(googOpts)
-      .then((data) ->
+      .then((gData) ->
         tripDetail = {}
-        tripDetail.sLat = data.routes[0].legs[0].start_location.lat
-        tripDetail.sLng = data.routes[0].legs[0].start_location.lng
-        tripDetail.eLat = data.routes[0].legs[0].end_location.lat
-        tripDetail.eLng = data.routes[0].legs[0].end_location.lng
+
+        tripDetail.sLat = gData.routes[0].legs[0].start_location.lat
+        tripDetail.sLng = gData.routes[0].legs[0].start_location.lng
+        tripDetail.eLat = gData.routes[0].legs[0].end_location.lat
+        tripDetail.eLng = gData.routes[0].legs[0].end_location.lng
+
+        uOpts =
+          uri: "https://api.uber.com/v1/estimates/price"
+          headers:
+            "Authorization": "Token " + process.env.UBER_TOKEN
+          data: tripDetail
+          json: true
 
         msg.send "#{tripDetail.sLat} and #{tripDetail.sLng} to #{tripDetail.eLat} and #{tripDetail.eLng}"
+
+        rp(uOpts)
+          .then((uData) ->
+            msg.send "#{uData}"
+        )
       )
       .catch((err) ->
         errMsg = err.statusCode
