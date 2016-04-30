@@ -24,25 +24,23 @@ module.exports = (robot) ->
       uri: "https://api.uber.com/v1/estimates/price"
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-      data: {}
+      data:
+        start_latitude: 42.3674219
+        start_longitude: -71.1781431
+        end_latitude: 42.3493675
+        end_longitude: -71.04988279999999
       json: true
 
-    rp(googOpts)
-      .then((gData) ->
-        options.data.start_latitude = gData.routes[0].legs[0].start_location.lat
-        options.data.start_longitude = gData.routes[0].legs[0].start_location.lng
-        options.data.end_latitude = gData.routes[0].legs[0].end_location.lat
-        options.data.end_longitude = gData.routes[0].legs[0].end_location.lng
-
-        msg.send "#{options.data.start_latitude} #{options.data.start_longitude} #{options.data.end_latitude} #{options.data.end_longitude}"
-      )
-      .catch((err) ->
-        errCode = err.code
-        errStatus = err.status
-        errMsg = err.message
-        msg.send "Error, code: #{errCode}. #{errStatus}: #{errMsg}"
-        msg.send "Did you try to find directions to/in Neverland?"
-      )
+    rp(options)
+      .then((uData) ->
+        msg.send "#{uData}"
+    )
+    .catch((uErr) ->
+      errMsg = uErr.message
+      errCode = uErr.statusCode
+      msg.send "#{errMsg}. Code: #{errCode}."
+      msg.send "Uber doesn't like your shenanigans."
+    )
 
 formatAddress = (add) ->
   add.split(" ").join("+");
