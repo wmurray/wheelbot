@@ -24,10 +24,11 @@ module.exports = (robot) ->
       uri: uUrl
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-      start_latitude: 42.3674219
-      start_longitude: -71.1781431
-      end_latitude: 42.3493675
-      end_longitude: -71.04988279999999
+      fields:
+        start_latitude: 42.3674219
+        start_longitude: -71.1781431
+        end_latitude: 42.3493675
+        end_longitude: -71.04988279999999
       json: true
 
 
