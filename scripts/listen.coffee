@@ -54,6 +54,7 @@ module.exports = (robot) ->
           gData.routes[0].legs[0].end_location.lng
         )
 
+        msg.send "#{gInfo.values[0]}"
         uOpts.url = uriConcat()
 
         rp(uOpts)
