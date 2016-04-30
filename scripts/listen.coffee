@@ -18,22 +18,25 @@ module.exports = (robot) ->
         "User-Agent": "Request-Promise"
       json: true
 
-    options =
-      uri: "https://api.uber.com/v1/estimates/price"
-      headers:
-        "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+    uOpts =
+      options:
+        uri: "https://api.uber.com/v1/estimates/price"
+        headers:
+          "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+        data = {}
 
-    tripData = {}
 
     rp(googOpts)
       .then((gData) ->
-        tripData.start_latitude = gData.routes[0].legs[0].start_location.lat
-        tripData.start_longitude = gData.routes[0].legs[0].start_location.lng
-        tripData.end_latitude = gData.routes[0].legs[0].end_location.lat
-        tripData.end_longitude = gData.routes[0].legs[0].end_location.lng
+        uOpts.data.start_latitude = gData.routes[0].legs[0].start_location.lat
+        uOpts.data.start_longitude = gData.routes[0].legs[0].start_location.lng
+        uOpts.data.end_latitude = gData.routes[0].legs[0].end_location.lat
+        uOpts.data.end_longitude = gData.routes[0].legs[0].end_location.lng
+
+        msg.send "#{uOpts.data.end_latitude}"
       )
-      .then((options, tripData) ->
-        rp(options)
+      .then((uOpts) ->
+        rp(uOpts)
           .then((uData) ->
             msg.send "#{uData}"
         )
