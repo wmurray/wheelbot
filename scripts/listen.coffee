@@ -65,7 +65,7 @@ module.exports = (robot) ->
 formatAddress = (add) ->
   add.split(" ").join("+");
 
-queryBuilder = (params, type) ->
+uriConcat = (params, type) ->
   concatUri = ""
   if type == "google"
     concatUri = gBase + "?origin=" + params[0] + "&destination=" + params[1] + "&key=" + gKey
