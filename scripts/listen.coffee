@@ -21,6 +21,7 @@ module.exports = (robot) ->
     options =
       uri: "https://api.uber.com/v1/estimates/price"
       headers:
+        "User-Agent": "Request-Promise"
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
 
      tripData = {}
