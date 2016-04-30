@@ -9,7 +9,7 @@ uriConcat = (apiInfo) ->
   queryValues = apiInfo.values
 
   for i in queryStrings.length
-    cocatUri = concatUri + queryStrings[i] + queryValues[i]
+    concatUri = concatUri + queryStrings[i] + queryValues[i]
 
   return concatUri
 
