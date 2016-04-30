@@ -34,7 +34,7 @@ module.exports = (robot) ->
         options.data.end_latitude = gData.routes[0].legs[0].end_location.lat
         options.data.end_longitude = gData.routes[0].legs[0].end_location.lng
 
-        msg.send "#{options.data.end_latitude}"
+        msg.send "#{options.data.start_latitude} #{options.data.start_longitude} #{options.data.end_latitude} #{options.data.end_longitude}"
       )
       .catch((err) ->
         errCode = err.code
