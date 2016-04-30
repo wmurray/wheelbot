@@ -41,7 +41,11 @@ module.exports = (robot) ->
 
       rp(uOpts)
         .then((uData) ->
-          msg.send "#{uData}"
+          allProducts = uData.products
+          if allProducts.length > 0
+            msg.send "There are #{allProducts.length} Uber products near you."
+          else
+            msg.send "Sorry, Uber isn't available there at this time."
       )
       .catch((uErr) ->
         errMsg = uErr.message
