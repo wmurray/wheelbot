@@ -21,6 +21,7 @@ module.exports = (robot) ->
       json: true
 
     options =
+      uri: uUrl
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
       start_latitude: 42.3674219
@@ -29,7 +30,7 @@ module.exports = (robot) ->
       end_longitude: -71.04988279999999
       json: true
 
-    rp(uUrl, options)
+    rp(options)
       .then((uData) ->
         msg.send "#{uData}"
     )
