@@ -24,13 +24,13 @@ module.exports = (robot) ->
       uri: uUrl
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+      data:
+        "start_latitude": 42.3674219
+        "start_longitude": -71.1781431
+        "end_latitude": 42.3493675
+        "end_longitude": -71.04988279999999
       json: true
 
-    data =
-      start_latitude: 42.3674219
-      start_longitude: -71.1781431
-      end_latitude: 42.3493675
-      end_longitude: -71.04988279999999
 
     rp(options, data)
       .then((uData) ->
