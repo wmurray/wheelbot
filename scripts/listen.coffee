@@ -22,6 +22,7 @@ module.exports = (robot) ->
       uri: "https://api.uber.com/v1/estimates/price"
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+      data: {}
 
     rp(googOpts)
       .then((gData) ->
@@ -43,9 +44,11 @@ module.exports = (robot) ->
         )
       )
       .catch((err) ->
-        errMsg = err.statusCode
-        msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
-        msg.send "Check the address and try again."
+        errCode = err.code
+        errStatus = err.status
+        errMsg = err.message
+        msg.send "Error, code: #{errCode}. #{errStatus}: #{errMsg}"
+        msg.send "Did you try to find directions to/in Neverland?"
       )
 
 formatAddress = (add) ->
