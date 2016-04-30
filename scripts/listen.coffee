@@ -18,28 +18,27 @@ module.exports = (robot) ->
         "User-Agent": "Request-Promise"
       json: true
 
-    uOpts =
-      "options":
-        "uri": "https://api.uber.com/v1/estimates/price"
-        "headers":
-          "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+    options =
+      uri: "https://api.uber.com/v1/estimates/price"
+      headers:
+        "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
 
     rp(googOpts)
       .then((gData) ->
-        uOpts.start_latitude = gData.routes[0].legs[0].start_location.lat
-        uOpts.start_longitude = gData.routes[0].legs[0].start_location.lng
-        uOpts.end_latitude = gData.routes[0].legs[0].end_location.lat
-        uOpts.end_longitude = gData.routes[0].legs[0].end_location.lng
+        options.data.start_latitude = gData.routes[0].legs[0].start_location.lat
+        options.data.start_longitude = gData.routes[0].legs[0].start_location.lng
+        options.data.end_latitude = gData.routes[0].legs[0].end_location.lat
+        options.data.end_longitude = gData.routes[0].legs[0].end_location.lng
       )
-      .then((uOpts) ->
-        rp(uOpts)
+      .then((options) ->
+        rp(options)
           .then((uData) ->
             msg.send "#{uData}"
         )
         .catch((uErr) ->
           errMsg = uErr.message
           errCode = uErr.statusCode
-          msg.send "Error, code: #{errCode}. Message: #{errMsg}"
+          msg.send "#{errMsg}, code: #{errCode}."
           msg.send "Uber API doesn't like your shenanigans."
         )
       )
