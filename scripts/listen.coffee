@@ -28,39 +28,39 @@ module.exports = (robot) ->
       }
       json: true
 
-  rp(googOpts)
-    .then((gData) ->
-      tripData.push(
-        gData.routes[0].legs[0].start_location.lat,
-        gData.routes[0].legs[0].start_location.lng,
-        gData.routes[0].legs[0].end_location.lat,
-        gData.routes[0].legs[0].end_location.lng
-      )
+    rp(googOpts)
+      .then((gData) ->
+        tripData.push(
+          gData.routes[0].legs[0].start_location.lat,
+          gData.routes[0].legs[0].start_location.lng,
+          gData.routes[0].legs[0].end_location.lat,
+          gData.routes[0].legs[0].end_location.lng
+        )
 
-      uOpts.url = uriConcat(tripData, uber)
+        uOpts.url = uriConcat(tripData, uber)
 
-      rp(uOpts)
-        .then((uData) ->
-          allProducts = uData.products
-          if allProducts.length > 0
-            msg.send "There are #{allProducts.length} Uber products near you."
-          else
-            msg.send "Sorry, Uber isn't available there at this time."
+        rp(uOpts)
+          .then((uData) ->
+            allProducts = uData.products
+            if allProducts.length > 0
+              msg.send "There are #{allProducts.length} Uber products near you."
+            else
+              msg.send "Sorry, Uber isn't available there at this time."
+        )
+        .catch((uErr) ->
+          errMsg = uErr.message
+          errCode = uErr.statusCode
+          msg.send "#{errMsg}. Code: #{errCode}."
+          msg.send "Uber doesn't like your shenanigans."
+        )
       )
-      .catch((uErr) ->
-        errMsg = uErr.message
-        errCode = uErr.statusCode
-        msg.send "#{errMsg}. Code: #{errCode}."
-        msg.send "Uber doesn't like your shenanigans."
+      .catch((err) ->
+        errCode = err.code
+        errStatus = err.status
+        errMsg = err.message
+        msg.send "Error, code: #{errCode}. #{errStatus}: #{errMsg}"
+        msg.send "Did you try to find directions to/in Neverland?"
       )
-    )
-    .catch((err) ->
-      errCode = err.code
-      errStatus = err.status
-      errMsg = err.message
-      msg.send "Error, code: #{errCode}. #{errStatus}: #{errMsg}"
-      msg.send "Did you try to find directions to/in Neverland?"
-    )
 
 formatAddress = (add) ->
   add.split(" ").join("+");
