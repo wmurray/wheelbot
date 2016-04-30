@@ -27,7 +27,7 @@ module.exports = (robot) ->
       json: true
 
 
-    rp(options, params)
+    rp(uUrl, params)
       .then((uData) ->
         msg.send "#{uData}"
     )
