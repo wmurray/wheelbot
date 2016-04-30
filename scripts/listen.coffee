@@ -30,6 +30,8 @@ module.exports = (robot) ->
         uOpts.end_latitude = gData.routes[0].legs[0].end_location.lat
         uOpts.end_longitude = gData.routes[0].legs[0].end_location.lng
 
+      )
+      .then((uOpts) ->
         rp(uOpts)
           .then((uData) ->
             msg.send "#{uData}"
