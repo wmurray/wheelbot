@@ -21,6 +21,7 @@ module.exports = (robot) ->
       json: true
 
     params =
+      uri: uUrl + "?latitude=" + this.latitude + "&longitude=" + this.longitude
       headers:{
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
       }
