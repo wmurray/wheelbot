@@ -6,10 +6,10 @@ gBase = "https://maps.googleapis.com/maps/api/directions/json"
 formatAddress = (add) ->
   add.split(" ").join("+");
 
-uriConcat = (params, type) ->
+uriConcat = (params, typeData) ->
   concatUri = ""
-  if type == "google"
-    concatUri = gBase + "?origin=" + params[0] + "&destination=" + params[1] + "&key=" + gKey
+  if typeData.type == "google"
+    concatUri = gBase + "?origin=" + params[0] + "&destination=" + params[1] + "&key=" + typeData.key
   else if type == "uber"
     concatUri = uBase + "?start_latitude=" + params[0] + "&start_longitude=" + params[1] + "&end_latitude=" + params[2] + "&end_longitude=" + params[3]
 
@@ -23,7 +23,7 @@ module.exports = (robot) ->
     formattedAddresses = [formatAddress(origin), formatAddress(destination)]
 
     gKey = process.env.GOOGLE_MAPS_TOKEN
-    gUrl = uriConcat(formattedAddresses, "google")
+    gUrl = uriConcat(formattedAddresses, {"type":"google", "key":gKey})
 
     tripData = []
 
@@ -49,7 +49,7 @@ module.exports = (robot) ->
           gData.routes[0].legs[0].end_location.lng
         )
 
-        uOpts.url = uriConcat(tripData, "uber")
+        uOpts.url = uriConcat(tripData, {"type":"uber"})
 
         rp(uOpts)
           .then((uData) ->
