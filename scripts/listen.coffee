@@ -24,7 +24,6 @@ module.exports = (robot) ->
       uri: "https://api.uber.com/v1/estimates/price"
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-      data: {}
 
     rp(googOpts)
       .then((gData) ->
@@ -35,8 +34,8 @@ module.exports = (robot) ->
 
         msg.send "#{options.data.end_latitude}"
       )
-      .then((uUrl, options) ->
-        rp(uUrl, options)
+      .then((uUrl) ->
+        rp(uUrl)
           .then((uData) ->
             msg.send "#{uData}"
         )
