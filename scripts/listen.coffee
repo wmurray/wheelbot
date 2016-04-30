@@ -19,11 +19,11 @@ module.exports = (robot) ->
       json: true
 
     uOpts =
-      options:
+      "options":
         "uri": "https://api.uber.com/v1/estimates/price"
         "headers":
           "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-      data: {}
+      "data": {}
 
     rp(googOpts)
       .then((gData) ->
@@ -40,8 +40,8 @@ module.exports = (robot) ->
         .catch((uErr) ->
           errMsg = uErr.message
           errCode = uErr.statusCode
-          msg.send "#{errMsg}, code: #{errCode}."
-          msg.send "Uber API doesn't like your shenanigans."
+          msg.send "#{errMsg}. Code: #{errCode}."
+          msg.send "Uber doesn't like your shenanigans."
         )
       )
       .catch((err) ->
