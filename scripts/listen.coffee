@@ -19,9 +19,10 @@ module.exports = (robot) ->
       json: true
 
     uOpts =
-      uri: "https://api.uber.com/v1/estimates/price"
-      headers:
-        "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+      options:
+        uri: "https://api.uber.com/v1/estimates/price"
+        headers:
+          "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
 
     rp(googOpts)
       .then((gData) ->
