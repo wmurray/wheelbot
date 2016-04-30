@@ -25,6 +25,7 @@ module.exports = (robot) ->
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
       data: {}
+      json: true
 
     rp(googOpts)
       .then((gData) ->
@@ -35,8 +36,8 @@ module.exports = (robot) ->
 
         msg.send "#{options.data.end_latitude}"
       )
-      .then((uUrl) ->
-        rp(uUrl)
+      .then((options) ->
+        rp(options)
           .then((uData) ->
             msg.send "#{uData}"
         )
