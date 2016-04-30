@@ -26,7 +26,8 @@ module.exports = (robot) ->
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
       json: true
 
-    rp(options, {
+    rp({
+        uri: uUrl
         start_latitude: 42.3674219
         start_longitude: -71.1781431
         end_latitude: 42.3493675
