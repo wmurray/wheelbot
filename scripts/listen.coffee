@@ -24,11 +24,10 @@ module.exports = (robot) ->
           uri: "https://api.uber.com/v1/estimates/price"
           headers:
             "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-          data:
-            start_latitude: gData.routes[0].legs[0].start_location.lat
-            start_longitude: gData.routes[0].legs[0].start_location.lng
-            end_latitude: gData.routes[0].legs[0].end_location.lat
-            end_longitude: gData.routes[0].legs[0].end_location.lng
+          start_latitude: gData.routes[0].legs[0].start_location.lat
+          start_longitude: gData.routes[0].legs[0].start_location.lng
+          end_latitude: gData.routes[0].legs[0].end_location.lat
+          end_longitude: gData.routes[0].legs[0].end_location.lng
 
         rp(uOpts)
           .then((uData) ->
