@@ -25,13 +25,11 @@ module.exports = (robot) ->
 
     rp(googOpts)
       .then((gData) ->
-          uOpts.start_latitude: gData.routes[0].legs[0].start_location.lat
-          uOpts.start_longitude: gData.routes[0].legs[0].start_location.lng
-          uOpts.end_latitude: gData.routes[0].legs[0].end_location.lat
-          uOpts.end_longitude: gData.routes[0].legs[0].end_location.lng
+        uOpts.start_latitude = gData.routes[0].legs[0].start_location.lat
+        uOpts.start_longitude = gData.routes[0].legs[0].start_location.lng
+        uOpts.end_latitude = gData.routes[0].legs[0].end_location.lat
+        uOpts.end_longitude = gData.routes[0].legs[0].end_location.lng
 
-      )
-      .then() ->
         rp(uOpts)
           .then((uData) ->
             msg.send "#{uData}"
@@ -42,6 +40,7 @@ module.exports = (robot) ->
           msg.send "Error, code: #{errCode}. Message: #{errMsg}"
           msg.send "Uber API doesn't like your shenanigans."
         )
+      )
       .catch((err) ->
         errMsg = err.statusCode
         msg.send "Error, code: #{errMsg}. Did you try to find directions to/in Neverland?"
