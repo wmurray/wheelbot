@@ -24,18 +24,13 @@ module.exports = (robot) ->
       uri: "https://api.uber.com/v1/estimates/price"
       headers:
         "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
-      json: true
-
-    tripData =
-      uri: "https://api.uber.com/v1/estimates/price"
-      headers:
-        "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
       start_latitude: 42.3674219
       start_longitude: -71.1781431
       end_latitude: 42.3493675
       end_longitude: -71.04988279999999
+      json: true
 
-    rp(options, tripData)
+    rp(options)
       .then((uData) ->
         msg.send "#{uData}"
     )
