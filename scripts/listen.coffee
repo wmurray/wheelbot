@@ -33,8 +33,8 @@ module.exports = (robot) ->
 
         msg.send "#{uOpts.data.end_latitude}"
       )
-      .then((uOpts) ->
-        rp(uOpts)
+      .then((options) ->
+        rp(options)
           .then((uData) ->
             msg.send "#{uData}"
         )
