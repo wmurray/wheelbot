@@ -19,7 +19,7 @@ module.exports = (robot) ->
       json: true
 
     uOpts =
-      options:
+      "options":
         "uri": "https://api.uber.com/v1/estimates/price"
         "headers":
           "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
@@ -30,7 +30,6 @@ module.exports = (robot) ->
         uOpts.start_longitude = gData.routes[0].legs[0].start_location.lng
         uOpts.end_latitude = gData.routes[0].legs[0].end_location.lat
         uOpts.end_longitude = gData.routes[0].legs[0].end_location.lng
-
       )
       .then((uOpts) ->
         rp(uOpts)
