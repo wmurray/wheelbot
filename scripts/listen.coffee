@@ -36,18 +36,6 @@ module.exports = (robot) ->
 
         msg.send "#{options.data.end_latitude}"
       )
-      .then((options) ->
-        rp(options)
-          .then((uData) ->
-            msg.send "#{uData}"
-        )
-        .catch((uErr) ->
-          errMsg = uErr.message
-          errCode = uErr.statusCode
-          msg.send "#{errMsg}. Code: #{errCode}."
-          msg.send "Uber doesn't like your shenanigans."
-        )
-      )
       .catch((err) ->
         errCode = err.code
         errStatus = err.status
