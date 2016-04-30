@@ -8,6 +8,8 @@ module.exports = (robot) ->
     originFormatted = formatAddress(origin)
     destinationFormatted = formatAddress(destination)
 
+    uUrl = "https://api.uber.com/v1/estimates/price"
+
     gKey = process.env.GOOGLE_MAPS_TOKEN
     gQuery = "?origin=" + originFormatted + "&destination=" + destinationFormatted + "&key=" + gKey
     gUrl = "https://maps.googleapis.com/maps/api/directions/json" + gQuery
@@ -33,8 +35,8 @@ module.exports = (robot) ->
 
         msg.send "#{options.data.end_latitude}"
       )
-      .then((options) ->
-        rp(options)
+      .then((uUrl, options) ->
+        rp(uUrl, options)
           .then((uData) ->
             msg.send "#{uData}"
         )
