@@ -9,7 +9,7 @@ module.exports = (robot) ->
 
     gKey = process.env.GOOGLE_MAPS_TOKEN
     gBase = "https://maps.googleapis.com/maps/api/directions/json"
-    gUrl = uriConcat(formattedAddresses, google)
+    gUrl = uriConcat(formattedAddresses, "google")
 
     uBase = "http://api.uber.com/v1/estimates/prices"
 
@@ -37,7 +37,7 @@ module.exports = (robot) ->
           gData.routes[0].legs[0].end_location.lng
         )
 
-        uOpts.url = uriConcat(tripData, uber)
+        uOpts.url = uriConcat(tripData, "uber")
 
         rp(uOpts)
           .then((uData) ->
