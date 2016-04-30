@@ -8,7 +8,7 @@ module.exports = (robot) ->
     originFormatted = formatAddress(origin)
     destinationFormatted = formatAddress(destination)
 
-    uUrl = "https://sandbox-api.uber.com/v1"
+    uUrl = "https://sandbox-api.uber.com/v1/products"
 
     gKey = process.env.GOOGLE_MAPS_TOKEN
     gQuery = "?origin=" + originFormatted + "&destination=" + destinationFormatted + "&key=" + gKey
