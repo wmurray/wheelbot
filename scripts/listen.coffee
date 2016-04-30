@@ -1,17 +1,15 @@
 rp = require("request-promise")
 
-uBase = "http://api.uber.com/v1/estimates/prices"
-gBase = "https://maps.googleapis.com/maps/api/directions/json"
-
 formatAddress = (add) ->
   add.split(" ").join("+");
 
-uriConcat = (params, typeData) ->
-  concatUri = ""
-  if typeData.type == "google"
-    concatUri = gBase + "?origin=" + params[0] + "&destination=" + params[1] + "&key=" + typeData.key
-  else if type == "uber"
-    concatUri = uBase + "?start_latitude=" + params[0] + "&start_longitude=" + params[1] + "&end_latitude=" + params[2] + "&end_longitude=" + params[3]
+uriConcat = (apiInfo) ->
+  concatUri = apiInfo.base
+  queryStrings = apiInfo.queryStrings
+  queryValues = apiInfo.values
+
+  for i in queryStrings.length
+    cocatUri = concatUri + queryStrings[i] + queryValues[i]
 
   return concatUri
 
@@ -20,36 +18,43 @@ module.exports = (robot) ->
   robot.respond /get me from (.*) to (.*)/i, (msg) ->
     origin = msg.match[1]
     destination = msg.match[2]
-    formattedAddresses = [formatAddress(origin), formatAddress(destination)]
 
-    gKey = process.env.GOOGLE_MAPS_TOKEN
-    gUrl = uriConcat(formattedAddresses, {"type":"google", "key":gKey})
+    gInfo =
+      base: "https://maps.googleapis.com/maps/api/directions/json"
+      queryStrings: ["?origin=", "&destination=", "&key"]
+      values: [formatAddress(origin), formatAddress(destination)]
+      key = process.env.GOOGLE_MAPS_TOKEN
 
-    tripData = []
+    uInfo =
+      base: "http://api.uber.com/v1/estimates/prices"
+      queryStrings: ["?start_latitude", "&start_longitude=", "&end_latitude=", "&end_longitude="]
+      values: []
+      key = process.env.UBER_SERVER_TOKEN
+
 
     googOpts =
-      uri: gUrl
+      uri: uriConcat(gInfo)
       headers:
         "User-Agent": "Request-Promise"
       json: true
 
     uOpts =
-      uri: ""
+      uri: uriConcat(uInfo)
       headers:{
-        "Authorization": "Token " + process.env.UBER_SERVER_TOKEN
+        "Authorization": "Token " + uInfo.key
       }
       json: true
 
     rp(googOpts)
       .then((gData) ->
-        tripData.push(
+        uInfo.values.push(
           gData.routes[0].legs[0].start_location.lat,
           gData.routes[0].legs[0].start_location.lng,
           gData.routes[0].legs[0].end_location.lat,
           gData.routes[0].legs[0].end_location.lng
         )
 
-        uOpts.url = uriConcat(tripData, {"type":"uber"})
+        uOpts.url = uriConcat()
 
         rp(uOpts)
           .then((uData) ->
