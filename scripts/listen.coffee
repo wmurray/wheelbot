@@ -23,13 +23,13 @@ module.exports = (robot) ->
       base: "https://maps.googleapis.com/maps/api/directions/json"
       queryStrings: ["?origin=", "&destination=", "&key"]
       values: [formatAddress(origin), formatAddress(destination)]
-      key = process.env.GOOGLE_MAPS_TOKEN
+      key: process.env.GOOGLE_MAPS_TOKEN
 
     uInfo =
       base: "http://api.uber.com/v1/estimates/prices"
       queryStrings: ["?start_latitude", "&start_longitude=", "&end_latitude=", "&end_longitude="]
       values: []
-      key = process.env.UBER_SERVER_TOKEN
+      key: process.env.UBER_SERVER_TOKEN
 
 
     googOpts =
