@@ -70,6 +70,6 @@ queryBuilder = (params, type) ->
   if type == "google"
     concatUri = gBase + "?origin=" + params[0] + "&destination=" + params[1] + "&key=" + gKey
   else if type == "uber"
-    concatUri = uBase + "?start_latitude=" + params[0] + "&start_longitude=" params[1] + "&end_latitude=" + params[2] + "&end_longitude=" + params[3]
+    concatUri = uBase + "?start_latitude=" + params[0] + "&start_longitude=" + params[1] + "&end_latitude=" + params[2] + "&end_longitude=" + params[3]
 
   return concatUri
