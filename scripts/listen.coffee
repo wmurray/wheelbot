@@ -1,7 +1,7 @@
 rp = require("request-promise")
 
 formatAddress = (add) ->
-  add.split(" ").join("+");
+  return add.split(" ").join("+")
 
 uriConcat = (apiInfo) ->
   concatUri = apiInfo.base
@@ -21,13 +21,13 @@ module.exports = (robot) ->
 
     gInfo =
       base: "https://maps.googleapis.com/maps/api/directions/json"
-      queryStrings: ["?origin=", "&destination=", "&key"]
+      queryStrings: ["?origin=", "&destination=", "&key="]
       values: [formatAddress(origin), formatAddress(destination)]
       key: process.env.GOOGLE_MAPS_TOKEN
 
     uInfo =
       base: "http://api.uber.com/v1/estimates/prices"
-      queryStrings: ["?start_latitude", "&start_longitude=", "&end_latitude=", "&end_longitude="]
+      queryStrings: ["?start_latitude=", "&start_longitude=", "&end_latitude=", "&end_longitude="]
       values: []
       key: process.env.UBER_SERVER_TOKEN
 
