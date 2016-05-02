@@ -59,6 +59,8 @@ module.exports = (robot) ->
 
         msg.send "#{uOpts.uri}"
 
+      )
+      .then((uOpts) ->
         rp(uOpts)
           .then((uData) ->
             allProducts = uData.products
