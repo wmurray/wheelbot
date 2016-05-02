@@ -9,7 +9,7 @@ uriConcat = (apiInfo, msg) ->
   queryValues = apiInfo.values
 
 
-  msg.send "#{queryValues}, #{concatUri}"
+  msg.send "#{typeof(queryValues)}, #{concatUri}"
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
 
@@ -20,8 +20,6 @@ module.exports = (robot) ->
   robot.respond /get me from (.*) to (.*)/i, (msg) ->
     origin = formatAddress(msg.match[1])
     destination = formatAddress(msg.match[2])
-
-    msg.send "#{origin}"
 
     gInfo =
       base: "https://maps.googleapis.com/maps/api/directions/json"
@@ -49,7 +47,7 @@ module.exports = (robot) ->
       }
       json: true
 
-    rp()
+    rp(googOpts)
       .then((gData) ->
         uInfo.values.push(
           gData.routes[0].legs[0].start_location.lat,
