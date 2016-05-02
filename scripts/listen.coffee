@@ -15,6 +15,17 @@ uriConcat = (apiInfo, msg) ->
 
   return concatUri
 
+getEstimates = (products, msg, i) ->
+  message = products[i].display_name + ": " + products[i].estimate + " " +
+  products[i].currency_code
+
+  if products[i].surge_multiplier > 1.0
+    message += " with a surge rate of " + products[i].surge_multiplier + "x
+    the norm"
+
+  msg.send "#{message}"
+
+
 module.exports = (robot) ->
 
   robot.respond /get me from (.*) to (.*)/i, (msg) ->
@@ -57,13 +68,15 @@ module.exports = (robot) ->
 
         uOpts.uri = uriConcat(uInfo)
 
-        msg.send "#{uOpts.uri}"
-
         rp(uOpts)
           .then((uData) ->
             allProducts = uData.prices
+
             if allProducts.length > 0
               msg.send "There are #{allProducts.length} Uber products near you."
+
+              getEstimates(allProducts, msg, i) for i in [0...products.length] by 1
+
             else
               msg.send "Sorry, Uber isn't available there at this time."
         )
