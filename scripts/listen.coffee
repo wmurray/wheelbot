@@ -46,7 +46,7 @@ module.exports = (robot) ->
       }
       json: true
 
-    msg.send "#{gInfo.queryStrings[0]}"
+    msg.send "#{gInfo.values[0]}"
 
     rp(googOpts)
       .then((gData) ->
@@ -80,5 +80,4 @@ module.exports = (robot) ->
         errMsg = err.message
         msg.send "Error, code: #{errCode}. #{errStatus}: #{errMsg}"
         msg.send "Did you try to find directions to/in Neverland?"
-        msg.send "#{googOpts.uri}"
       )
