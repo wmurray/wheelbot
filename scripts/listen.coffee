@@ -75,7 +75,7 @@ module.exports = (robot) ->
             if allProducts.length > 0
               msg.send "There are #{allProducts.length} Uber products near you."
 
-              getEstimates(allProducts, msg, i) for i in [0...products.length] by 1
+              getEstimates(allProducts, msg, i) for i in [0...allProducts.length] by 1
 
             else
               msg.send "Sorry, Uber isn't available there at this time."
