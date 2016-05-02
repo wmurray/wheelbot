@@ -9,7 +9,7 @@ uriConcat = (apiInfo, msg) ->
   queryValues = apiInfo.values
 
 
-  msg.send "#{typeof(queryValues)}"
+  msg.send "#{queryValues[0]}"
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
 
