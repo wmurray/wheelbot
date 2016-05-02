@@ -28,7 +28,7 @@ module.exports = (robot) ->
       values: [origin, destination, process.env.GOOGLE_MAPS_TOKEN]
 
     uInfo =
-      base: "http://api.uber.com/v1/estimates/prices"
+      base: "http://api.uber.com/v1/estimates/price"
       key: process.env.UBER_SERVER_TOKEN
       queryStrings: ["?start_latitude=", "&start_longitude=", "&end_latitude=", "&end_longitude="]
       values: []
@@ -59,8 +59,6 @@ module.exports = (robot) ->
 
         msg.send "#{uOpts.uri}"
 
-      )
-      .then((uOpts) ->
         rp(uOpts)
           .then((uData) ->
             allProducts = uData.products
