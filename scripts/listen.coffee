@@ -16,8 +16,10 @@ uriConcat = (apiInfo, msg) ->
   return concatUri
 
 getEstimates = (products, msg, i) ->
-  message = products[i].display_name + ": " + products[i].estimate + " " +
-  products[i].currency_code
+  message = products[i].display_name + ": " + products[i].estimate 
+
+  if products[i].currency_code != null
+    message += " " + products[i].currency_code
 
   if products[i].surge_multiplier > 1.0
     message += " with a surge rate of " + products[i].surge_multiplier + "x
