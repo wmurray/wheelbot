@@ -46,9 +46,9 @@ module.exports = (robot) ->
       }
       json: true
 
-    msg.send "#{gInfo.values[0]}"
+    msg.send "#{googOpts.uri}"
 
-    rp(googOpts)
+    rp()
       .then((gData) ->
         uInfo.values.push(
           gData.routes[0].legs[0].start_location.lat,
