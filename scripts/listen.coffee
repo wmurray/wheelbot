@@ -35,7 +35,7 @@ module.exports = (robot) ->
 
 
     googOpts =
-      uri: uriConcat(gInfo, msg)
+      uri: uriConcat(gInfo) + gInfo.key
       headers:
         "User-Agent": "Request-Promise"
       json: true
