@@ -34,7 +34,7 @@ module.exports = (robot) ->
       values: []
 
 
-    msg.send "#{gInfo.alues[2]}"
+    msg.send "#{gInfo.values[2]}"
     googOpts =
       uri: uriConcat(gInfo)
       headers:
