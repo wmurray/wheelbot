@@ -15,18 +15,23 @@ uriConcat = (apiInfo, msg) ->
 
   return concatUri
 
-getEstimates = (products, i) ->
-  message += "> " + products[i].display_name + ": " + products[i].estimate
+filterResults = (products) ->
+  getEstimates = (products, i) ->
+    message = ""
 
-  if products[i].currency_code != null
-    message += " " + products[i].currency_code
+    message += "> " + products[i].display_name + ": " + products[i].estimate
 
-  if products[i].surge_multiplier > 1.0
-    message += " with a surge rate of " + products[i].surge_multiplier + "x
-    the norm"
+    if products[i].currency_code != null
+      message += " " + products[i].currency_code
 
-  if i < products.length - 1
-    message += "\n"
+    if products[i].surge_multiplier > 1.0
+      message += " with a surge rate of " + products[i].surge_multiplier + "x
+      the norm"
+
+    if i < products.length - 1
+      message += "\n"
+
+  getEstimates(products, i) for i in [0...products.length] by 1
 
 module.exports = (robot) ->
 
@@ -75,10 +80,9 @@ module.exports = (robot) ->
             allProducts = uData.prices
 
             if allProducts.length > 0
-              message = ""
               msg.send "There are #{allProducts.length} Uber products near you."
 
-              getEstimates(allProducts, i) for i in [0...allProducts.length] by 1
+              filterResults(allProducts)
 
               msg.send "#{message}"
 
