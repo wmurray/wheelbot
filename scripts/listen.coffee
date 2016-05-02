@@ -16,7 +16,7 @@ uriConcat = (apiInfo, msg) ->
   return concatUri
 
 getEstimates = (products, msg, i) ->
-  message = products[i].display_name + ": " + products[i].estimate 
+  message = "> " + products[i].display_name + ": " + products[i].estimate
 
   if products[i].currency_code != null
     message += " " + products[i].currency_code
