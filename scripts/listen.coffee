@@ -57,7 +57,7 @@ module.exports = (robot) ->
           gData.routes[0].legs[0].end_location.lng
         )
 
-        uOpts.url = uriConcat(uInfo)
+        uOpts.uri = uriConcat(uInfo)
 
         rp(uOpts)
           .then((uData) ->
