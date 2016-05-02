@@ -11,7 +11,6 @@ uriConcat = (dataObj) ->
 
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
-    msg.send "#{queryStrings[i]}"
 
   return concatUri
 
@@ -41,7 +40,7 @@ module.exports = (robot) ->
       json: true
 
     uOpts =
-      uri: uriConcat(uInfo)
+      uri: ""
       headers:{
         "Authorization": "Token " + uInfo.key
       }
@@ -58,7 +57,7 @@ module.exports = (robot) ->
           gData.routes[0].legs[0].end_location.lng
         )
 
-        uOpts.url = uriConcat()
+        uOpts.url = uriConcat(uInfo)
 
         rp(uOpts)
           .then((uData) ->
