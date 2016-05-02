@@ -33,8 +33,6 @@ module.exports = (robot) ->
       queryStrings: ["?start_latitude=", "&start_longitude=", "&end_latitude=", "&end_longitude="]
       values: []
 
-
-    msg.send "#{gInfo.values[2]}"
     googOpts =
       uri: uriConcat(gInfo)
       headers:
@@ -58,6 +56,8 @@ module.exports = (robot) ->
         )
 
         uOpts.uri = uriConcat(uInfo)
+
+        msg.send "#{uOpts.uri}"
 
         rp(uOpts)
           .then((uData) ->
