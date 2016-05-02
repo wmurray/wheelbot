@@ -3,11 +3,13 @@ rp = require("request-promise")
 formatAddress = (add) ->
   return add.split(" ").join("+")
 
-uriConcat = (dataObj) ->
+uriConcat = (dataObj, msg) ->
   apiInfo = dataObj
   concatUri = apiInfo.base
-  queryStrings = apiInfo.queryStrings
-  queryValues = apiInfo.values
+  qStrings = apiInfo.queryStrings
+  qValues = apiInfo.values
+
+  msg.send "#{qValues.length} #{qValues[0]}"
 
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
@@ -34,7 +36,7 @@ module.exports = (robot) ->
 
 
     googOpts =
-      uri: uriConcat(gInfo)
+      uri: uriConcat(gInfo, msg)
       headers:
         "User-Agent": "Request-Promise"
       json: true
@@ -45,8 +47,6 @@ module.exports = (robot) ->
         "Authorization": "Token " + uInfo.key
       }
       json: true
-
-    msg.send "#{googOpts.uri}"
 
     rp()
       .then((gData) ->
