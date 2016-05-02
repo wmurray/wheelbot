@@ -9,9 +9,9 @@ uriConcat = (apiInfo, msg) ->
   queryValues = apiInfo.values
 
 
+  msg.send "#{queryValues}, #{concatUri}"
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
-    msg.send "#{queryValues[i]}"
 
   return concatUri
 
@@ -20,6 +20,8 @@ module.exports = (robot) ->
   robot.respond /get me from (.*) to (.*)/i, (msg) ->
     origin = formatAddress(msg.match[1])
     destination = formatAddress(msg.match[2])
+
+    msg.send "#{origin}"
 
     gInfo =
       base: "https://maps.googleapis.com/maps/api/directions/json"
