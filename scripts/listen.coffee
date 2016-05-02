@@ -15,9 +15,10 @@ uriConcat = (apiInfo, msg) ->
 
   return concatUri
 
-filterResults = (products) ->
+filterResults = (products, msg) ->
+  message = ""
+
   getEstimates = (products, i) ->
-    message = ""
 
     message += "> " + products[i].display_name + ": " + products[i].estimate
 
@@ -32,6 +33,8 @@ filterResults = (products) ->
       message += "\n"
 
   getEstimates(products, i) for i in [0...products.length] by 1
+
+  msg.send "#{message}"
 
 module.exports = (robot) ->
 
@@ -82,9 +85,7 @@ module.exports = (robot) ->
             if allProducts.length > 0
               msg.send "There are #{allProducts.length} Uber products near you."
 
-              filterResults(allProducts)
-
-              msg.send "#{message}"
+              filterResults(allProducts, msg)
 
             else
               msg.send "Sorry, Uber isn't available there at this time."
