@@ -15,7 +15,7 @@ uriConcat = (apiInfo, msg) ->
 
   return concatUri
 
-getEstimates = (products, message, i) ->
+getEstimates = (products, i) ->
   message += "> " + products[i].display_name + ": " + products[i].estimate
 
   if products[i].currency_code != null
@@ -78,7 +78,7 @@ module.exports = (robot) ->
               message = ""
               msg.send "There are #{allProducts.length} Uber products near you."
 
-              getEstimates(allProducts, message, i) for i in [0...allProducts.length] by 1
+              getEstimates(allProducts, i) for i in [0...allProducts.length] by 1
 
               msg.send "#{message}"
 
