@@ -3,29 +3,28 @@ rp = require("request-promise")
 formatAddress = (add) ->
   return add.split(" ").join("+")
 
-uriConcat = (dataObj, msg) ->
-  apiInfo = dataObj
+uriConcat = (apiInfo, msg) ->
   concatUri = apiInfo.base
-  qStrings = apiInfo.queryStrings
-  qValues = apiInfo.values
+  queryStrings = apiInfo.queryStrings
+  queryValues = apiInfo.values
 
-  msg.send "#{qValues.length} #{qValues[0]}"
 
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
+    msg.send "#{queryValues[i]}"
 
   return concatUri
 
 module.exports = (robot) ->
 
   robot.respond /get me from (.*) to (.*)/i, (msg) ->
-    origin = msg.match[1]
-    destination = msg.match[2]
+    origin = formatAddress(msg.match[1])
+    destination = formatAddress(msg.match[2])
 
     gInfo =
       base: "https://maps.googleapis.com/maps/api/directions/json"
       queryStrings: ["?origin=", "&destination=", "&key="]
-      values: [formatAddress(origin), formatAddress(destination)]
+      values: [origin, destination]
       key: process.env.GOOGLE_MAPS_TOKEN
 
     uInfo =
