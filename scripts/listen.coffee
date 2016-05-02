@@ -10,6 +10,7 @@ uriConcat = (apiInfo) ->
 
   for i in queryStrings
     concatUri = concatUri + queryStrings[i] + queryValues[i]
+    msg.send "#{concatUri}"
 
   return concatUri
 
