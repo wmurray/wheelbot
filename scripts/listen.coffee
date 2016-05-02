@@ -7,14 +7,11 @@ uriConcat = (apiInfo, msg) ->
   concatUri = apiInfo.base
   queryStrings = apiInfo.queryStrings
   queryValues = apiInfo.values
+
   stringConcat = (i) ->
     concatUri = concatUri + queryStrings[i] + queryValues[i]
 
-
-  msg.send "#{queryValues[0]}"
-
-
-  stringConcat(i) for i in [0...queryStrings.length]
+  stringConcat(i) for i in [0...queryStrings.length] by 1
 
   return concatUri
 
@@ -50,6 +47,7 @@ module.exports = (robot) ->
       }
       json: true
 
+    msg.send "#{googOpts.uri}"
     rp(googOpts)
       .then((gData) ->
         uInfo.values.push(
