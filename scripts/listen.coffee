@@ -24,7 +24,7 @@ module.exports = (robot) ->
     gInfo =
       base: "https://maps.googleapis.com/maps/api/directions/json"
       queryStrings: ["?origin=", "&destination=", "&key="]
-      values: [origin, destination]
+      values: [origin, destination, this.key]
       key: process.env.GOOGLE_MAPS_TOKEN
 
     uInfo =
@@ -35,7 +35,7 @@ module.exports = (robot) ->
 
 
     googOpts =
-      uri: uriConcat(gInfo) + gInfo.key
+      uri: uriConcat(gInfo)
       headers:
         "User-Agent": "Request-Promise"
       json: true
@@ -47,7 +47,6 @@ module.exports = (robot) ->
       }
       json: true
 
-    msg.send "#{googOpts.uri}"
     rp(googOpts)
       .then((gData) ->
         uInfo.values.push(
