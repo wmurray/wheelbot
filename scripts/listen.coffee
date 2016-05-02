@@ -61,7 +61,7 @@ module.exports = (robot) ->
 
         rp(uOpts)
           .then((uData) ->
-            allProducts = uData.products
+            allProducts = uData.prices
             if allProducts.length > 0
               msg.send "There are #{allProducts.length} Uber products near you."
             else
