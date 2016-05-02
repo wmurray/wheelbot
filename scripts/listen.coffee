@@ -25,7 +25,7 @@ getEstimates = (products, message, i) ->
     message += " with a surge rate of " + products[i].surge_multiplier + "x
     the norm"
 
-  if i != products.length - 1
+  if i < products.length - 1
     message += "\n"
 
 module.exports = (robot) ->
@@ -79,6 +79,8 @@ module.exports = (robot) ->
               msg.send "There are #{allProducts.length} Uber products near you."
 
               getEstimates(allProducts, message, i) for i in [0...allProducts.length] by 1
+
+              msg.send "#{message}"
 
             else
               msg.send "Sorry, Uber isn't available there at this time."
